@@ -31,6 +31,7 @@ public class SmartBankingApp{
             switch (screen) {
                 case DASHBOARD:
                     int option = getMenuChoice(scanner);
+                    
                     switch (option) {
                         case 1:
                             screen = OPEN_ACCOUNT;
@@ -148,9 +149,16 @@ public class SmartBankingApp{
         return scanner.nextInt();
     }
 
+    // Handles the user input to gracefully terminate the application if 'Z' or 'z' is pressed.
+    private static void handleExitShortcut(String userInput) {
+        if (userInput.equalsIgnoreCase("Z")) {
+            System.exit(0);
+        }
+    }
+
     //Generates a new account number based on the current account count.
-    private static String generateAccountNumber(int accountCount) {
-        return String.format("SDB-S%05d", accountCount + 1);
+    private static String generateAccountNumber(int accountInfoLength) {
+        return String.format("SDB-S%05d", accountInfoLength + 1);
     }
 
     //Prompts the user to enter and validates a name.
@@ -161,8 +169,10 @@ public class SmartBankingApp{
             valid = true;
             System.out.print("Enter Account Holder Name: ");
             name = scanner.nextLine().strip();
-            
 
+            // Prompt user to press Z and Enter to gracefully exit the application
+            handleExitShortcut(name);
+            
             if (name.isBlank()) {
                 printErrorMsg("Name can't be empty");
                 valid = false;
@@ -190,8 +200,13 @@ public class SmartBankingApp{
         do {
             valid = true;
             System.out.print("Enter Initial Deposit (minimum 5000): ");
+            String input = scanner.nextLine();
+            // Prompt user to press Z and Enter to gracefully exit the application
+            handleExitShortcut(input);
+            
             try {
-                initialDeposit = Double.parseDouble(scanner.nextLine());
+                initialDeposit = Double.parseDouble(input);
+
                 if (initialDeposit < 5000) {
                     printErrorMsg("Initial deposit must be at least 5000");
                     valid = false;
@@ -209,7 +224,7 @@ public class SmartBankingApp{
     private static void openAccountProcess(Scanner scanner) {
         scanner.nextLine();
         do {
-
+            
             String newAccountNumber = generateAccountNumber(accountInfo.length);
             System.out.println("New Account Number: " + newAccountNumber);
             
@@ -247,6 +262,9 @@ public class SmartBankingApp{
             System.out.print("Enter Account Number: ");
             accountNumber = scanner.nextLine().strip().toUpperCase();
 
+            // Prompt user to press Z and Enter to gracefully exit the application
+            handleExitShortcut(accountNumber);
+
             // Validate the account number format "S-XXXXX"
             if (!accountNumber.startsWith("SDB-S") || accountNumber.length() != 10) {
                 printErrorMsg("Invalid account number format. Please use SDB-SXXXXX format.");
@@ -273,8 +291,13 @@ public class SmartBankingApp{
     
         while (true) {
             System.out.print("Enter Deposit Amount (minimum 500): ");
+            String input = scanner.nextLine();
+
+            // Prompt user to press Z and Enter to gracefully exit the application
+            handleExitShortcut(input);
+            
             try {
-                depositAmount = Double.parseDouble(scanner.nextLine());
+                depositAmount = Double.parseDouble(input);
                 if (depositAmount < 500) printErrorMsg("Deposit amount must be at least 500"); else break;
             } catch (NumberFormatException e) {
                 printErrorMsg("Invalid input. Please enter a valid amount");
@@ -353,8 +376,14 @@ public class SmartBankingApp{
     
         while (true) {
             System.out.print("Enter Withdraw Amount (minimum 100): ");
+
+            String input = scanner.nextLine();
+
+            // Prompt user to press Z and Enter to gracefully exit the application
+            handleExitShortcut(input);
+
             try {
-                withdrawAmount = Double.parseDouble(scanner.nextLine());
+                withdrawAmount = Double.parseDouble(input);
                 if (withdrawAmount < 100) {
                     printErrorMsg("Withdraw amount must be at least 100");
                 } else if (currentBalance - withdrawAmount < 500) {
@@ -404,11 +433,16 @@ public class SmartBankingApp{
     //Prompts the user to enter and validates a transfer amount, considering the balance of the source account.
     private static double getTransferAmount(Scanner scanner, double fromAccountBalance) {
         double transferAmount;
+
+        String input = scanner.nextLine();
+
+        // Prompt user to press Z and Enter to gracefully exit the application
+        handleExitShortcut(input);
     
         while (true) {
             System.out.print("Enter Transfer Amount (minimum 100): ");
             try {
-                transferAmount = Double.parseDouble(scanner.nextLine());
+                transferAmount = Double.parseDouble(input);
                 if (transferAmount < 100) {
                     printErrorMsg("Transfer amount must be at least 100");
                 } else if (fromAccountBalance - transferAmount < 500) {
