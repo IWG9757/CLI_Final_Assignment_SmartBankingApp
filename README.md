@@ -24,6 +24,7 @@ Features:
     • Transfer funds between accounts.
     • Check account balances and available balances.
     • Delete existing accounts.
+    • Exit option 
     • Graceful termination using a keyboard shortcut.
 
 
@@ -65,6 +66,7 @@ Keyboard Shortcuts:
 Termination:
 
 To terminate the Smart Banking App, you can use the provided keyboard shortcut. Pressing Z and hitting Enter will immediately exit the application.
+You can also exit the application by selecting the "Exit" option in the main menu.
 
 
 Contributing:
