@@ -159,8 +159,6 @@ public class SmartBankingApp{
     private static String getValidName(Scanner scanner) {
         boolean valid;
         String name;
-    
-
         do {
             valid = true;
             System.out.print("Enter Account Holder Name: ");
@@ -239,13 +237,7 @@ public class SmartBankingApp{
 
             printSuccessMsg( newAccountNumber + " Account number " + "for " + name + " added successfully.");
             System.out.print("Do you want to open another account (Y/n)? ");
-            if (!scanner.nextLine().toUpperCase().strip().equals("Y")) {
-                break;
-            }else{
-                clearScreen();
-                printHeader(OPEN_ACCOUNT);
-                            
-            }
+            if (!askForNewEntry(scanner, OPEN_ACCOUNT)) break;
         } while (true);
     }
 
@@ -272,11 +264,8 @@ public class SmartBankingApp{
                 }
             }
 
-            if (!accountFound) {
-                printErrorMsg("Account not found");
-            } else {
-                break;
-            }
+            if (!accountFound) printErrorMsg("Account not found"); else break;
+
         }
         return accountNumber;
     }
@@ -289,18 +278,14 @@ public class SmartBankingApp{
             System.out.print("Enter Deposit Amount (minimum 500): ");
             try {
                 depositAmount = Double.parseDouble(scanner.nextLine());
-                if (depositAmount < 500) {
-                    printErrorMsg("Deposit amount must be at least 500");
-                } else {
-                    break;
-                }
+                if (depositAmount < 500) printErrorMsg("Deposit amount must be at least 500"); else break;
             } catch (NumberFormatException e) {
                 printErrorMsg("Invalid input. Please enter a valid amount");
             }
         }
-    
         return depositAmount;
     }
+
 
     private static String getNameForAccountNumber(String accountNumber) {
         for (String[] account : accountInfo) {
@@ -310,6 +295,7 @@ public class SmartBankingApp{
         }
         return null; // Account not found
     }
+
 
      //Retrieves the current balance of a specific account.
     private static double getAccountBalance(String accountNumber) {
@@ -341,17 +327,18 @@ public class SmartBankingApp{
             printSuccessMsg("Deposit Successful!\nNew Account Balance: LKR" + newBalance + "\n");
         
             System.out.println("Do you want to make another deposit (Y/n)? ");
-            if (!scanner.nextLine().toUpperCase().strip().equals("Y")) {
-                    break;
-                }else{
-                    clearScreen();
-                    printHeader(DEPOSIT);
-                                
-            }
-
+            if (!askForNewEntry(scanner, DEPOSIT)) break;
         }while(true);
+    }
 
-        
+    private static boolean askForNewEntry(Scanner scanner, String action){
+        if (scanner.nextLine().toUpperCase().strip().equals("Y")) {
+            clearScreen();
+            printHeader(DEPOSIT);
+            return true;
+        }else{   
+            return(false);         
+        }
     }
 
     private static void updateAccountBalance(String accountNumber, double newBalance) {
@@ -398,16 +385,13 @@ public class SmartBankingApp{
             double currentBalance = getAccountBalance(accountNumber);
             System.out.println("Current Balance :" + currentBalance);
             System.out.println("Available Balance for Withdraw: LKR " + (currentBalance - 500) + "\n");
+
             //Ask for a withdrawal. If the user's input is 'N' then go to the DASHBOARD.
             System.out.println("Do you want to make a withdrawal (Y/n)? ");
-            if (!scanner.nextLine().toUpperCase().strip().equals("Y")) {
-                break;
-            }
-
+            if (!scanner.nextLine().toUpperCase().strip().equals("Y")) break;
+    
             double withdrawAmount = getWithdrawAmount(scanner, currentBalance);
-            if (withdrawAmount == -1.0) {
-                return; // Insufficient funds
-            }
+            if (withdrawAmount == -1.0) return; // Insufficient funds
         
             double newBalance = currentBalance - withdrawAmount;
 
@@ -416,12 +400,7 @@ public class SmartBankingApp{
             printSuccessMsg("Withdrawal Successful!\nNew Balance: LKR " + newBalance + "\n");
         
             System.out.println("Do you want to make another withdrawal (Y/n)? ");
-            if (!scanner.nextLine().toUpperCase().strip().equals("Y")) {
-                break;
-            }else{
-                clearScreen();
-                printHeader(WITHDRAW);                   
-            }
+            if (!askForNewEntry(scanner, WITHDRAW)) break;
 
         }while(true);
         
@@ -488,15 +467,10 @@ public class SmartBankingApp{
             System.out.println("New Balance of "+ toAccountNumber+ " (To Account): LKR " + toAccountBalance + "\n");
         
             System.out.println("Do you want to make another transfer (Y/n)? ");
-            if (!scanner.nextLine().toUpperCase().strip().equals("Y")) {
-                        break;
-                    }else{
-                        clearScreen();
-                        printHeader(TRANSFER);                 
-                }
-
+            if (!askForNewEntry(scanner, TRANSFER)) break;
         }while(true);
     }
+
 
     //Initiates the process for checking and displaying the account balance.
     private static void checkAccountBalance(Scanner scanner) {
@@ -511,13 +485,7 @@ public class SmartBankingApp{
             System.out.println("Available Balance for Withdraw: LKR " + (currentBalance - 500) + "\n");
         
             System.out.println("Do you want to check another account balance (Y/n)? ");
-            if (!scanner.nextLine().toUpperCase().strip().equals("Y")) {
-                break;
-            }else{
-                clearScreen();
-                printHeader(CHECK_BALANCE);                 
-            }
-
+            if (!askForNewEntry(scanner, CHECK_BALANCE)) break;
         }while(true);
  
     }
@@ -553,20 +521,11 @@ public class SmartBankingApp{
                 printErrorMsg("Account deletion cancelled.");
             }
         
-            System.out.print("Do you want to continue (Y/n)? ");
-            if (!scanner.nextLine().toUpperCase().strip().equals("Y")) {
-                break;
-            }else{
-                clearScreen();
-                printHeader(DELETE_ACCOUNT);                 
-            }       
+            System.out.print("Do you want to delete another account (Y/n)? ");
+            if (!askForNewEntry(scanner, DELETE_ACCOUNT)) break;
             
         }while(true);
     }
-        
-    
-
-    
     
 }
 
