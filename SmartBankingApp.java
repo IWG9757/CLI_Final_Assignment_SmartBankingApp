@@ -86,12 +86,12 @@ public class SmartBankingApp{
                     break;
 
                 case CHECK_BALANCE:
-                    //checkAccountBalance(scanner);
+                    checkAccountBalance(scanner);
                     screen = DASHBOARD;
                     break;
 
                 case DELETE_ACCOUNT:
-                    //deleteAccount(scanner);
+                    deleteAccount(scanner);
                     screen = DASHBOARD;
                     break;
                 
@@ -496,6 +496,70 @@ public class SmartBankingApp{
                         printHeader(TRANSFER);                 
                 }
 
+        }while(true);
+    }
+
+    //Initiates the process for checking and displaying the account balance.
+    private static void checkAccountBalance(Scanner scanner) {
+        scanner.nextLine();
+        do{
+            String accountNumber = getValidAccountNumber(scanner);
+
+            System.out.println("Account Holder Name :"+ getNameForAccountNumber(accountNumber));
+        
+            double currentBalance = getAccountBalance(accountNumber);
+            System.out.println("Current Account Balance: LKR " + currentBalance );
+            System.out.println("Available Balance for Withdraw: LKR " + (currentBalance - 500) + "\n");
+        
+            System.out.println("Do you want to check another account balance (Y/n)? ");
+            if (!scanner.nextLine().toUpperCase().strip().equals("Y")) {
+                break;
+            }else{
+                clearScreen();
+                printHeader(CHECK_BALANCE);                 
+            }
+
+        }while(true);
+ 
+    }
+
+    //Initiates the process for deleting an account.
+    private static void deleteAccount(Scanner scanner) {
+        scanner.nextLine();
+        do{
+            String accountNumber = getValidAccountNumber(scanner);
+        
+            System.out.println("Account Holder Name :" + getNameForAccountNumber(accountNumber));
+
+            double currentBalance = getAccountBalance(accountNumber);
+            System.out.println("Current Account Balance: LKR " + currentBalance + "\n");
+        
+            System.out.print("Are you sure you want to delete this account (Y/n)? ");
+            String confirmation = scanner.nextLine().toUpperCase().strip();
+        
+            if (confirmation.equals("Y")) {
+                String[][] updatedAccountInfo = new String[accountInfo.length - 1][3];
+                int index = 0;
+                for (String[] account : accountInfo) {
+                    if (!account[1].equals(accountNumber)) {
+                        updatedAccountInfo[index] = account;
+                        index++;
+                    }
+                }
+                accountInfo = updatedAccountInfo;
+                printSuccessMsg("Account " + accountNumber + " and Name " + getNameForAccountNumber(accountNumber) + " have been deleted.\n");
+            } else {
+                printErrorMsg("Account deletion cancelled.");
+            }
+        
+            System.out.print("Do you want to continue (Y/n)? ");
+            if (!scanner.nextLine().toUpperCase().strip().equals("Y")) {
+                break;
+            }else{
+                clearScreen();
+                printHeader(DELETE_ACCOUNT);                 
+            }       
+            
         }while(true);
     }
         
