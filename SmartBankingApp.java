@@ -11,7 +11,7 @@ public class SmartBankingApp{
     private static final String CHECK_BALANCE = "Check Account Balance";
     private static final String DELETE_ACCOUNT = "Delete Account";
 
-    //
+    // Declares a private static String variable named 'screen' to hold screen-related data.
     private static String screen;
 
     // Initialize an empty array to store account information.
