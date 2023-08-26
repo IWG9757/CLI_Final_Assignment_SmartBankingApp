@@ -23,8 +23,6 @@ public class SmartBankingApp{
         
         String screen = DASHBOARD;
         Scanner scanner = new Scanner(System.in);
-
-        int accountCount = 0; // Counter for generating account number
         
         do {
             clearScreen();
@@ -67,7 +65,7 @@ public class SmartBankingApp{
                     break;
 
                 case OPEN_ACCOUNT:
-                    openAccountProcess(scanner,  accountCount);
+                    openAccountProcess(scanner);
                     screen = DASHBOARD;
                     
                     break;
@@ -213,14 +211,12 @@ public class SmartBankingApp{
 
 
     //This method facilitates the process of opening a new account by gathering and storing account information.
-    private static void openAccountProcess(Scanner scanner, int accountCount) {
-
+    private static void openAccountProcess(Scanner scanner) {
         scanner.nextLine();
         do {
 
-            String newAccountNumber = generateAccountNumber(accountCount);
+            String newAccountNumber = generateAccountNumber(accountInfo.length);
             System.out.println("New Account Number: " + newAccountNumber);
-            accountCount++;
             
             String name = getValidName(scanner);
             double initialDeposit = getValidInitialDeposit(scanner);
@@ -487,6 +483,7 @@ public class SmartBankingApp{
             updateAccountBalance(toAccountNumber, toAccountBalance);
         
             printSuccessMsg("Transfer successful!");
+            printErrorMsg("2% fee is deducted from the account");;
             System.out.println("New Balance of " + fromAccountNumber + " (From Account): LKR " + fromAccountBalance );
             System.out.println("New Balance of "+ toAccountNumber+ " (To Account): LKR " + toAccountBalance + "\n");
         
