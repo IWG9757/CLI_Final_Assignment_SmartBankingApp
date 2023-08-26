@@ -10,8 +10,10 @@ public class SmartBankingApp{
     private static final String CHECK_BALANCE = "Check Account Balance";
     private static final String DELETE_ACCOUNT = "Delete Account";
 
+    // Initialize an empty array to store account information.
     private static String[][] accountInfo = new String[0][0];
 
+    // Entry point of the Smart Banking application.
     public static void main(String[] args) {
         runSmartBankingApp();
     }
