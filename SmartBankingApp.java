@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class SmartBankingApp{
@@ -10,6 +11,9 @@ public class SmartBankingApp{
     private static final String CHECK_BALANCE = "Check Account Balance";
     private static final String DELETE_ACCOUNT = "Delete Account";
 
+    //
+    private static String screen;
+
     // Initialize an empty array to store account information.
     private static String[][] accountInfo = new String[0][0];
 
@@ -21,7 +25,7 @@ public class SmartBankingApp{
     //Implement the core logic of the Smart Banking App, including user interactions, menu navigation, and handling various banking operations.
     private static void runSmartBankingApp() {
         
-        String screen = DASHBOARD;
+        screen = DASHBOARD;
         Scanner scanner = new Scanner(System.in);
         
         do {
@@ -30,8 +34,17 @@ public class SmartBankingApp{
 
             switch (screen) {
                 case DASHBOARD:
-                    int option = getMenuChoice(scanner);
-                    
+                    int option;
+
+                    //Try to get the user's menu choice using the getMenuChoice method. 
+                    //If an InputMismatchException is caught, display an error message.
+                    try {
+                        option = getMenuChoice(scanner);
+                    } catch (InputMismatchException e) {
+                        scanner.nextLine(); // Clear the invalid input from the scanner buffer
+                        continue; // Continue to the next iteration of the loop
+                    }
+
                     switch (option) {
                         case 1:
                             screen = OPEN_ACCOUNT;
@@ -149,10 +162,11 @@ public class SmartBankingApp{
         return scanner.nextInt();
     }
 
-    // Handles the user input to gracefully terminate the application if 'Z' or 'z' is pressed.
-    private static void handleExitShortcut(String userInput) {
-        if (userInput.equalsIgnoreCase("Z")) {
-            System.exit(0);
+    // Handles special user input shortcuts.
+    private static void handleShortcuts(String userInput) {
+        if (userInput.equalsIgnoreCase("Z")) System.exit(0); // Gracefully terminate the application    
+        else if (userInput.equalsIgnoreCase("D")) {
+            runSmartBankingApp();
         }
     }
 
@@ -171,7 +185,8 @@ public class SmartBankingApp{
             name = scanner.nextLine().strip();
 
             // Prompt user to press Z and Enter to gracefully exit the application
-            handleExitShortcut(name);
+            //Handles the user input to navigate back to the main window if 'D' or 'd' is pressed.
+            handleShortcuts(name);
             
             if (name.isBlank()) {
                 printErrorMsg("Name can't be empty");
@@ -201,8 +216,11 @@ public class SmartBankingApp{
             valid = true;
             System.out.print("Enter Initial Deposit (minimum 5000): ");
             String input = scanner.nextLine();
+
+            
             // Prompt user to press Z and Enter to gracefully exit the application
-            handleExitShortcut(input);
+            //Handles the user input to navigate back to the main window if 'D' or 'd' is pressed.
+            handleShortcuts(input);
             
             try {
                 initialDeposit = Double.parseDouble(input);
@@ -262,8 +280,10 @@ public class SmartBankingApp{
             System.out.print("Enter Account Number: ");
             accountNumber = scanner.nextLine().strip().toUpperCase();
 
+            
             // Prompt user to press Z and Enter to gracefully exit the application
-            handleExitShortcut(accountNumber);
+            //Handles the user input to navigate back to the main window if 'D' or 'd' is pressed.
+            handleShortcuts(accountNumber);
 
             // Validate the account number format "S-XXXXX"
             if (!accountNumber.startsWith("SDB-S") || accountNumber.length() != 10) {
@@ -294,7 +314,8 @@ public class SmartBankingApp{
             String input = scanner.nextLine();
 
             // Prompt user to press Z and Enter to gracefully exit the application
-            handleExitShortcut(input);
+            //Handles the user input to navigate back to the main window if 'D' or 'd' is pressed.
+            handleShortcuts(input);
             
             try {
                 depositAmount = Double.parseDouble(input);
@@ -380,7 +401,8 @@ public class SmartBankingApp{
             String input = scanner.nextLine();
 
             // Prompt user to press Z and Enter to gracefully exit the application
-            handleExitShortcut(input);
+            //Handles the user input to navigate back to the main window if 'D' or 'd' is pressed.
+            handleShortcuts(input);
 
             try {
                 withdrawAmount = Double.parseDouble(input);
@@ -437,7 +459,8 @@ public class SmartBankingApp{
         String input = scanner.nextLine();
 
         // Prompt user to press Z and Enter to gracefully exit the application
-        handleExitShortcut(input);
+        //Handles the user input to navigate back to the main window if 'D' or 'd' is pressed.
+        handleShortcuts(input);
     
         while (true) {
             System.out.print("Enter Transfer Amount (minimum 100): ");
