@@ -1,4 +1,4 @@
-Smart Banking App
+﻿Smart Banking App
 
 The Smart Banking App is a simple command-line application that simulates a basic banking system. It allows users to perform various banking operations such as opening accounts, making deposits, withdrawals, transfers, and more.
 
@@ -18,16 +18,17 @@ Table of Contents
 
 Features:
 
-    Open new accounts with an initial deposit.
-    Make deposits to existing accounts.
-    Withdraw funds from existing accounts.
-    Transfer funds between accounts.
-    Check account balances and available balances.
-    Delete existing accounts.
-    Graceful termination using a keyboard shortcut.
+    • Open new accounts with an initial deposit.
+    • Make deposits to existing accounts.
+    • Withdraw funds from existing accounts.
+    • Transfer funds between accounts.
+    • Check account balances and available balances.
+    • Delete existing accounts.
+    • Graceful termination using a keyboard shortcut.
 
 
 Getting Started:
+
 Prerequisites:
 
     1. Java Development Kit (JDK) 8 or higher installed on your system.
@@ -53,9 +54,11 @@ Usage:
     4. Follow the on-screen instructions to navigate through the app and perform various banking operations.
 
 
+
+
 Keyboard Shortcuts:
 
-    To gracefully terminate the application at any point, press Z and hit Enter.
+    • To gracefully terminate the application at any point, press Z and hit Enter.
 
 
 Termination:
