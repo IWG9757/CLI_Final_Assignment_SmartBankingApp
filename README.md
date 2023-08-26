@@ -3,7 +3,7 @@
 The Smart Banking App is a simple command-line application that simulates a basic banking system. It allows users to perform various banking operations such as opening accounts, making deposits, withdrawals, transfers, and more.
 
 
-Table of Contents
+Table of Contents:
 
     * Features
     * Getting Started
