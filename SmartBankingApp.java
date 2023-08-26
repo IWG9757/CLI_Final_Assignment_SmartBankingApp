@@ -527,8 +527,10 @@ public class SmartBankingApp{
         scanner.nextLine();
         do{
             String accountNumber = getValidAccountNumber(scanner);
+
+            String name = getNameForAccountNumber(accountNumber);
         
-            System.out.println("Account Holder Name :" + getNameForAccountNumber(accountNumber));
+            System.out.println("Account Holder Name :" + name);
 
             double currentBalance = getAccountBalance(accountNumber);
             System.out.println("Current Account Balance: LKR " + currentBalance + "\n");
@@ -546,7 +548,7 @@ public class SmartBankingApp{
                     }
                 }
                 accountInfo = updatedAccountInfo;
-                printSuccessMsg("Account " + accountNumber + " and Name " + getNameForAccountNumber(accountNumber) + " have been deleted.\n");
+                printSuccessMsg("The account with number " + accountNumber + " and name " + name + " has been successfully deleted.");
             } else {
                 printErrorMsg("Account deletion cancelled.");
             }
