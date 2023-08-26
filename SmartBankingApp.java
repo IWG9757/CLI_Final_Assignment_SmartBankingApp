@@ -76,12 +76,12 @@ public class SmartBankingApp{
                     break;
 
                 case WITHDRAW:
-                    //withdrawProcess(scanner);
+                    withdrawProcess(scanner);
                     screen = DASHBOARD;
                     break;
 
                 case TRANSFER:
-                    //transferProcess(scanner);
+                    transferProcess(scanner);
                     screen = DASHBOARD;
                     break;
 
@@ -364,6 +364,142 @@ public class SmartBankingApp{
             }
         }
     }
+
+    //Prompts the user to enter and validates a withdrawal amount, considering the current account balance.
+    private static double getWithdrawAmount(Scanner scanner, double currentBalance) {
+        double withdrawAmount;
+    
+        while (true) {
+            System.out.print("Enter Withdraw Amount (minimum 100): ");
+            try {
+                withdrawAmount = Double.parseDouble(scanner.nextLine());
+                if (withdrawAmount < 100) {
+                    printErrorMsg("Withdraw amount must be at least 100");
+                } else if (currentBalance - withdrawAmount < 500) {
+                    printErrorMsg("Insufficient funds");
+                    withdrawAmount = -1.0; // Signal for insufficient funds
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                printErrorMsg("Invalid input. Please enter a valid amount");
+            }
+        }
+        return withdrawAmount;
+    }
+
+
+
+    //Initiates the process for withdrawing funds from an account.
+    private static void withdrawProcess(Scanner scanner) {
+        scanner.nextLine();
+        do{
+            String accountNumber = getValidAccountNumber(scanner);
+            System.out.println("Account Holder Name :"+ getNameForAccountNumber(accountNumber));
+
+            double currentBalance = getAccountBalance(accountNumber);
+            System.out.println("Current Balance :" + currentBalance);
+            System.out.println("Available Balance for Withdraw: LKR " + (currentBalance - 500) + "\n");
+            //Ask for a withdrawal. If the user's input is 'N' then go to the DASHBOARD.
+            System.out.println("Do you want to make a withdrawal (Y/n)? ");
+            if (!scanner.nextLine().toUpperCase().strip().equals("Y")) {
+                break;
+            }
+
+            double withdrawAmount = getWithdrawAmount(scanner, currentBalance);
+            if (withdrawAmount == -1.0) {
+                return; // Insufficient funds
+            }
+        
+            double newBalance = currentBalance - withdrawAmount;
+
+            updateAccountBalance(accountNumber, newBalance);
+
+            printSuccessMsg("Withdrawal Successful!\nNew Balance: LKR " + newBalance + "\n");
+        
+            System.out.println("Do you want to make another withdrawal (Y/n)? ");
+            if (!scanner.nextLine().toUpperCase().strip().equals("Y")) {
+                break;
+            }else{
+                clearScreen();
+                printHeader(WITHDRAW);                   
+            }
+
+        }while(true);
+        
+        
+    }
+    
+
+    //Prompts the user to enter and validates a transfer amount, considering the balance of the source account.
+    private static double getTransferAmount(Scanner scanner, double fromAccountBalance) {
+        double transferAmount;
+    
+        while (true) {
+            System.out.print("Enter Transfer Amount (minimum 100): ");
+            try {
+                transferAmount = Double.parseDouble(scanner.nextLine());
+                if (transferAmount < 100) {
+                    printErrorMsg("Transfer amount must be at least 100");
+                } else if (fromAccountBalance - transferAmount < 500) {
+                    printErrorMsg("Insufficient funds");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                printErrorMsg("Invalid input. Please enter a valid amount");
+            }
+        }
+    
+        return transferAmount;
+    }
+
+
+    //Initiates the process for transferring funds between accounts.
+    private static void transferProcess(Scanner scanner) {
+        scanner.nextLine();
+        do{
+            System.out.println("From Account:");
+            String fromAccountNumber = getValidAccountNumber(scanner);
+            System.out.println("From Account Holder Name :" + getNameForAccountNumber(fromAccountNumber));
+            double fromAccountBalance = getAccountBalance(fromAccountNumber);
+            System.out.println("From Account Number: " + fromAccountNumber);
+            System.out.println("Current Balance: LKR " + fromAccountBalance + "\n");
+
+            System.out.println("To Account:");
+            String toAccountNumber = getValidAccountNumber(scanner);
+            System.out.println("To Account Holder Name :" + getNameForAccountNumber(toAccountNumber));
+            double toAccountBalance = getAccountBalance(toAccountNumber);
+            System.out.println("To Account Number: " + toAccountNumber);
+            System.out.println("Current Balance: LKR " + toAccountBalance + "\n");
+        
+            double transferAmount = getTransferAmount(scanner, fromAccountBalance);
+        
+            if (transferAmount == -1.0) {
+                return; // Insufficient funds
+            }
+        
+            fromAccountBalance -= transferAmount;
+            updateAccountBalance(fromAccountNumber, fromAccountBalance);
+            toAccountBalance += transferAmount;
+            updateAccountBalance(toAccountNumber, toAccountBalance);
+        
+            printSuccessMsg("Transfer successful!");
+            System.out.println("New Balance of " + fromAccountNumber + " (From Account): LKR " + fromAccountBalance );
+            System.out.println("New Balance of "+ toAccountNumber+ " (To Account): LKR " + toAccountBalance + "\n");
+        
+            System.out.println("Do you want to make another transfer (Y/n)? ");
+            if (!scanner.nextLine().toUpperCase().strip().equals("Y")) {
+                        break;
+                    }else{
+                        clearScreen();
+                        printHeader(TRANSFER);                 
+                }
+
+        }while(true);
+    }
+        
+    
 
     
     
