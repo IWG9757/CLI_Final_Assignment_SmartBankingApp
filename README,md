@@ -58,7 +58,8 @@ Usage:
 
 Keyboard Shortcuts:
 
-    • To gracefully terminate the application at any point, press Z and hit Enter.
+    • To gracefully terminate the application at any point, press Z or z and hit Enter.
+    • To Navigate back to the main dashboard from any sub-menu, press D or d and hit Enter.
 
 
 Termination:
