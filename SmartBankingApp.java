@@ -28,8 +28,6 @@ public class SmartBankingApp{
             clearScreen();
             printHeader(screen);
 
-          
-
             switch (screen) {
                 case DASHBOARD:
                     int option = getMenuChoice(scanner);
@@ -61,6 +59,7 @@ public class SmartBankingApp{
                             System.out.println("Exiting the Smart Banking App...");
                             System.exit(0);
                             break;
+
                         default:
                             continue;
                     }
@@ -69,7 +68,6 @@ public class SmartBankingApp{
                 case OPEN_ACCOUNT:
                     openAccountProcess(scanner);
                     screen = DASHBOARD;
-                    
                     break;
 
                 case DEPOSIT:
