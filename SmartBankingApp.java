@@ -28,6 +28,8 @@ public class SmartBankingApp{
             clearScreen();
             printHeader(screen);
 
+          
+
             switch (screen) {
                 case DASHBOARD:
                     int option = getMenuChoice(scanner);
@@ -97,13 +99,12 @@ public class SmartBankingApp{
                 
                 default:
                     scanner.close();
-                    System.exit(0);
+                    System.exit(0);    
             }
 
         } while (true);
-
-
     }
+
     // Clear the terminal
     private static void clearScreen() {
         System.out.print("\033[H\033[2J"); 
@@ -148,7 +149,6 @@ public class SmartBankingApp{
         System.out.print("Enter an option to continue > ");
         return scanner.nextInt();
     }
-
 
     //Generates a new account number based on the current account count.
     private static String generateAccountNumber(int accountCount) {
@@ -206,7 +206,6 @@ public class SmartBankingApp{
 
         return initialDeposit;
     }
-
 
     //This method facilitates the process of opening a new account by gathering and storing account information.
     private static void openAccountProcess(Scanner scanner) {
@@ -373,8 +372,6 @@ public class SmartBankingApp{
         return withdrawAmount;
     }
 
-
-
     //Initiates the process for withdrawing funds from an account.
     private static void withdrawProcess(Scanner scanner) {
         scanner.nextLine();
@@ -403,8 +400,6 @@ public class SmartBankingApp{
             if (!askForNewEntry(scanner, WITHDRAW)) break;
 
         }while(true);
-        
-        
     }
     
 
