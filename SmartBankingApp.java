@@ -481,7 +481,7 @@ public class SmartBankingApp{
                 return; // Insufficient funds
             }
         
-            fromAccountBalance -= transferAmount;
+            fromAccountBalance -= 1.02*transferAmount;
             updateAccountBalance(fromAccountNumber, fromAccountBalance);
             toAccountBalance += transferAmount;
             updateAccountBalance(toAccountNumber, toAccountBalance);
