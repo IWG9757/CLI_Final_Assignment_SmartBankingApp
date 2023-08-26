@@ -238,6 +238,25 @@ public class SmartBankingApp{
         return initialDeposit;
     }
 
+    private static boolean askForNewEntry(Scanner scanner, String action){
+        if (scanner.nextLine().toUpperCase().strip().equals("Y")) {
+            clearScreen();
+            printHeader(DEPOSIT);
+            return true;
+        }else{   
+            return(false);         
+        }
+    }
+
+    private static void updateAccountBalance(String accountNumber, double newBalance) {
+        for (String[] account : accountInfo) {
+            if (account[1].equals(accountNumber)) {
+                account[2] = String.valueOf(newBalance);
+                break;
+            }
+        }
+    }
+
     //This method facilitates the process of opening a new account by gathering and storing account information.
     private static void openAccountProcess(Scanner scanner) {
         scanner.nextLine();
@@ -370,25 +389,6 @@ public class SmartBankingApp{
             System.out.println("Do you want to make another deposit (Y/n)? ");
             if (!askForNewEntry(scanner, DEPOSIT)) break;
         }while(true);
-    }
-
-    private static boolean askForNewEntry(Scanner scanner, String action){
-        if (scanner.nextLine().toUpperCase().strip().equals("Y")) {
-            clearScreen();
-            printHeader(DEPOSIT);
-            return true;
-        }else{   
-            return(false);         
-        }
-    }
-
-    private static void updateAccountBalance(String accountNumber, double newBalance) {
-        for (String[] account : accountInfo) {
-            if (account[1].equals(accountNumber)) {
-                account[2] = String.valueOf(newBalance);
-                break;
-            }
-        }
     }
 
     //Prompts the user to enter and validates a withdrawal amount, considering the current account balance.
