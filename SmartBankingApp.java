@@ -260,7 +260,7 @@ public class SmartBankingApp{
 
         while (true) {
             System.out.print("Enter Account Number: ");
-            accountNumber = scanner.nextLine().strip();
+            accountNumber = scanner.nextLine().strip().toUpperCase();
 
             // Validate the account number format "S-XXXXX"
             if (!accountNumber.startsWith("SDB-S") || accountNumber.length() != 10) {
