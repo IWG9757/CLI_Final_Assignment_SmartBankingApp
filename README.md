@@ -40,14 +40,11 @@ The Smart Banking App is a simple command-line application that simulates a basi
 ***
 
 ### Prerequisites
-***
     1. Java Development Kit (JDK) 8 or higher installed on your system.
     2. A command-line interface (terminal) to run the application.
 
 
 ### Installation
-***
-
     1. Clone the repository or download the ZIP file of the code.
     2. Open your terminal and navigate to the directory where the code is located.
 
