@@ -76,7 +76,8 @@ The Smart Banking App is a simple command-line application that simulates a basi
 ### Termination
 ***
 
-    To terminate the Smart Banking App, you can use the provided keyboard shortcut. Pressing Z or z and hitting Enter will immediately exit the application.
+    To terminate the Smart Banking App, you can use the provided keyboard shortcut. 
+    Pressing Z or z and hitting Enter will immediately exit the application.
 
 
 ### Contributing
